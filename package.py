@@ -1,19 +1,15 @@
 import random
-
-def apb(a,b):
-    return a + b
-def amb(a,b):
-    return a - b
-def atb(a,b):
-    return a ** b
-def relu(x):
-    return max(0,x)
-
-
-
-
-
-
+def decode(op,object):
+    for i in op:
+        if i[0] == "*":object *= i[1]
+        elif i[0] == "+":object += i[1]
+        elif i[0] == 'relu':object = max(0,object)
+        elif i[0] == "**":object = object ** i[1]
+def chain(op,object):
+    dop = []
+    for i in op.reverse():
+        if i[0] == "*":
+            dop.append([""])
 class neuron():
     def __init__(self,input):
         self.weight = random.random()
@@ -21,6 +17,7 @@ class neuron():
         self.activation_function = 'relu'
         self.input = input
         self.output = 0
+        self.op_output = [["*",self.weight],["+",self.bias],['relu','relu']]
     def activate(self,input,activation_function):
         if activation_function=='relu':return max(0,input)
         if activation_function==None:pass
@@ -71,8 +68,9 @@ class network():
         for i in range(len(target)):
             self.cost += (target[i]-self.output[i]) ** 2
         return self.cost
-    def get_gradients(self):
+    def OTC(self,target):
         pass
+
 
 
 x = network([1],[1])
