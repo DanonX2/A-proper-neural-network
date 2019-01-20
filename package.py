@@ -38,10 +38,9 @@ class layer():
             self.outputlayer[i] = self.neurons[i].output       
 
 class network():
-    def __init__(self,inputlayer,dimension):
+    def __init__(self,dimension):
         self.dimension = dimension
-        self.inputlayer = inputlayer
-        self.layers = [inputlayer]
+        self.layers = [[1]]
         for i in range(1):self.layers.append(layer(self.layers[0],self.dimension[i]))
         for i in range(1, len(self.dimension)):self.layers.append(layer(self.layers[-1].outputlayer,self.dimension[i]))#adding num of hidden layers based on given dimension ##including the outputlayer##
         #for i in self.layers[-1]:i.activation_function==None #output layer which has no activation
@@ -90,6 +89,7 @@ class network():
     def train(self,rate,rounds):
         cost = 0
         for i in range(rounds):
+            self.inputlayer = self.trainingdata[i][0]
             self.forwardpropagation()
             self.get_gradients(self.trainingdata[i][1])
             #backpropagation
@@ -99,11 +99,3 @@ class network():
                     self.layers[l+1].neurons[n].bias += -self.gradients[l][n][1] * rate
             cost += (sum(self.testingdata[i][1]) - sum(self.layers[-1].outputlayer)) ** 2
             print("rounds:",i,"costs:",cost/(i+1))
-        
-data = [[[2,2],[10]]]
-x = network([1],[1,3,5,1])
-x.setdata(data,data,data)
-for i in range(10):
-    x.train(0.008,1)
-
-print(x.layers[-1].outputlayer)

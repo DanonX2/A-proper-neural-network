@@ -1,7 +1,10 @@
-from sympy import *
+from package import *
 
-x = Symbol('x')
-y = x**2
-yp = y.diff(x)
 
-print(type(yp))
+data = [[[2,2],[10]]]
+x = network([1,3,5,1])
+x.setdata(data,data,data)
+for i in range(10):
+    x.train(0.008,1)
+
+print(x.layers[-1].outputlayer)
