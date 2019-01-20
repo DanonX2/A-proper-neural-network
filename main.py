@@ -1,10 +1,11 @@
-from package import *
+from package import network
 
+data = [[[0],[0]] for i in range(50)]
+for i in range(50):
+    data[i] = [[i],[i*i]]
 
-data = [[[2,2],[10]]]
-x = network([1,3,5,1])
+x = network([1])
 x.setdata(data,data,data)
-for i in range(10):
-    x.train(0.008,1)
+x.train(0.1,5)
 
 print(x.layers[-1].outputlayer)
