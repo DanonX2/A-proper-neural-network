@@ -1,3 +1,1 @@
-x = [1,2,3,4]
-y = [2,3,4,5]
-print(x + y)
+for i in range(1):print("count")
