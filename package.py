@@ -97,5 +97,8 @@ class network():
                 for n in range(len(self.layers[l+1].neurons)):
                     self.layers[l+1].neurons[n].weight += -self.gradients[l][n][0] * rate
                     self.layers[l+1].neurons[n].bias += -self.gradients[l][n][1] * rate
-            cost += (sum(self.testingdata[i][1]) - sum(self.layers[-1].outputlayer)) ** 2
+            for j in range(len(self.testingdata[i][1])):
+                cost += (self.testingdata[i][1][j] - self.layers[-1].outputlayer[j]) ** 2
+
+            
             print("rounds:",i,"costs:",cost/(i+1))
